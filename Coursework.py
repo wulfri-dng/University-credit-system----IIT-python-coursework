@@ -8,8 +8,6 @@ trailer = 0
 retriver = 0
 excluded = 0
 
-menuRepeat = 0
-
 progressList = []
 trailerList = []
 retriverList = []
@@ -18,60 +16,65 @@ excludedList = []
 databasePath = "D:\IIT\Software Development [Python]\Coursework\CourseworkDatabase.txt"
 
 def rangeChecker(inputCredit):
-    if inputCredit not in range(0,121,20):
-        print("Out of range")
-        return False
-    return True
+    if inputCredit in range(0,121,20):
+        return True
+    print("Out of range")
 
 def progressionChecker(passCredits, deferCredits, failCredits):
     global progress, trailer, retriver, excluded
 
     if passCredits == 120:
         progressList.append(str(passCredits) + ", " + str(deferCredits) + ", " + str(failCredits))
+        print("------------------ \nResult - Progress \n------------------")
         progress += 1
     elif passCredits == 100:
         trailerList.append(str(passCredits) + ", " + str(deferCredits) + ", " + str(failCredits))
+        print("----------------------------------- \nResult - Progress (module trailer) \n-----------------------------------")
         trailer += 1
     elif (passCredits == 40 and failCredits == 80) or (passCredits == 20 and (deferCredits <= 20)) or (passCredits == 0 and (failCredits >= 80)):
         excludedList.append(str(passCredits) + ", " + str(deferCredits) + ", " + str(failCredits))
+        print("----------------- \nResult - Exclude \n-----------------")
         excluded += 1
     else:
         retriverList.append(str(passCredits) + ", " + str(deferCredits) + ", " + str(failCredits))
+        print("-------------------------- \nResult - Module retriever \n--------------------------")
         retriver += 1
 
 def getUserInput():
-    try:
-        while True:
-            passCredits = int(input("Please enter your credits at pass: "))
-            if rangeChecker(passCredits):
-                break
+    while True:
+        try:
+            while True:
+                passCredits = int(input("Please enter your credits at pass: "))
+                if rangeChecker(passCredits):
+                    break
 
-        while True:
-            deferCredits = int(input("Please enter your credits at defer: "))
-            if rangeChecker(deferCredits):
-                break
+            while True:
+                deferCredits = int(input("Please enter your credits at defer: "))
+                if rangeChecker(deferCredits):
+                    break
+                
+            while True:
+                failCredits = int(input("Please enter your credits at fail: "))
+                if rangeChecker(failCredits):
+                    break
+            
+            if passCredits + deferCredits + failCredits != 120:
+                print("Total incorrect")
+                continue
 
-        while True:
-            failCredits = int(input("Please enter your credits at fail: "))
-            if rangeChecker(failCredits):
-                break
-        
-        if passCredits + deferCredits + failCredits != 120:
-            print("Total incorrect")
-            getUserInput()
+            progressionChecker(passCredits, deferCredits, failCredits)
+            break
 
-        progressionChecker(passCredits, deferCredits, failCredits)
-
-    except ValueError:
-        print("Integer required")
-        passCredits = 0
-        deferCredits = 0
-        failCredits = 0
-        getUserInput()
+        except ValueError:
+            print("Integer required")
+            passCredits = 0
+            deferCredits = 0
+            failCredits = 0
+            continue
 
 # Part 1 - Horizontal Histogram--------------------------------
 
-def printResult1():
+def printHorizontal():
     totalOutcomes = progress + trailer + retriver + excluded
 
     print("\n-----------------Horizontal Histogram-----------------")
@@ -85,7 +88,7 @@ def printResult1():
 
 # Part 2 - Vertical Histogram----------------------------------
 
-def printResult2():
+def printVertical():
     global progress, trailer, retriver, excluded
 
     print("\n------------------Vertical Histogram------------------")
@@ -116,11 +119,11 @@ def printResult2():
             print("     *    ")
         else:
             print("          ")
-    print("--------------------------------------------------------")
+    print("-------------------------------------------------------- \n")
 
 # Part 3 -------------------------------------------------------
 
-def printResult3():
+def printAllValues():
     print("\n------------------------------------------------------")
     for i in progressList:
         print("Progress -", i)
@@ -160,41 +163,41 @@ def loadData():
     txtFile = open(databasePath, "r")
     print("----------------DATA FROM .TXT FILE-----------------")
     print(txtFile.read())
-    print("--------------------------------------------------------")
+    print("--------------------------------------------------------\n")
     txtFile.close()
 
-# --------------------------------------------------------------
+# Result Menu --------------------------------------------------
 
 def resultsMenu():
-    global menuRepeat
-    while menuRepeat >= 0:
-        if menuRepeat > 0:
+    onceLoop = False
+    while True:
+        if onceLoop:
             userInput = input("Are you want to try another printing method? (Select 'q' to leave)\nSelect between 1 - 4: ")
         else:
             userInput = input("1 - Horizontal Histogram\n2 - Vertical Histogram\n3 - Access from the list\n4 - Save to a .txt file and reload\nWhich method do you like to use for printing the result? (1 - 4): ")
 
         if userInput == "1":
-            printResult1()
+            printHorizontal()
         elif userInput == "2":
-            printResult2()
+            printVertical()
         elif userInput == "3":
-            printResult3()
+            printAllValues()
         elif userInput == "4":
             saveData()
             loadData()
         elif userInput == "q":
-            menuRepeat = -1
             print("Exiting...")
             break
         else:
             print("(Please enter a number between 0 - 4)")
-        menuRepeat = 1
+        onceLoop = True
 
 while True:
     getUserInput()
-    wantLoop = 'a'
-    while wantLoop != 'q' and wantLoop != 'y':
+    while True:
         wantLoop = input("Would you like to enter another set of data?\nEnter 'y' for yes or 'q' to quit and view results: ")
+        if wantLoop == 'y' or wantLoop == 'q':
+            break
     if wantLoop == 'q':
         resultsMenu()
         break
