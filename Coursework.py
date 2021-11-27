@@ -13,8 +13,6 @@ trailerList = []
 retriverList = []
 excludedList = []
 
-databasePath = "D:\IIT\Software Development [Python]\Coursework\CourseworkDatabase.txt"
-
 def rangeChecker(inputCredit):
     if inputCredit in range(0,121,20):
         return True
@@ -82,9 +80,9 @@ def printHorizontal():
     print("Trailer ", trailer, ":", '*'*trailer)
     print("Retriver", retriver, ":", '*'*retriver)
     print("Excluded", excluded, ":", '*'*excluded)
-    print(totalOutcomes, "outcomes in total.")
-    print("--------------------------------------------------------")
     print()
+    print(totalOutcomes, "outcomes in total.")
+    print("--------------------------------------------------------\n")
 
 # Part 2 - Vertical Histogram----------------------------------
 
@@ -142,7 +140,7 @@ def printAllValues():
 # Part 4 -------------------------------------------------------
 
 def saveData():
-    txtFile = open(databasePath, "w")
+    txtFile = open("CourseworkDatabase.txt", "w")
 
     for i in progressList:
         txtFile.writelines("Progress - " + i + "\n")
@@ -160,7 +158,7 @@ def saveData():
     print()
 
 def loadData():
-    txtFile = open(databasePath, "r")
+    txtFile = open("CourseworkDatabase.txt", "r")
     print("----------------DATA FROM .TXT FILE-----------------")
     print(txtFile.read())
     print("--------------------------------------------------------\n")
