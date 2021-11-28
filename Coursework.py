@@ -158,7 +158,7 @@ def saveData():
     print()
 
 def loadData():
-    txtFile = open("CourseworkDatabase.txt", "r")
+    txtFile = open("CourseworkDatabase.txt", "r") #Reference - GeeksForGeek Website
     print("----------------DATA FROM .TXT FILE-----------------")
     print(txtFile.read())
     print("--------------------------------------------------------\n")
