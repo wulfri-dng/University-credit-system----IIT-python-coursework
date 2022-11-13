@@ -1,8 +1,3 @@
-# I declare that my work contains no examples of misconduct, such as plagiarism, or collusion.
-# Any code taken from other sources is referenced within my code solution.
-# Student ID: 20212021
-# Date: 12/11/2021
-
 progress = 0
 trailer = 0
 retriver = 0
